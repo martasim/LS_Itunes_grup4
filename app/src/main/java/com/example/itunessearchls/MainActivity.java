@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Llamada de prueba a la API
+
         iTunesApiClient.getApiService().searchSongs("drake", "music", "musicTrack", 15)
                 .enqueue(new Callback<iTunesResponse>() {
                     @Override
