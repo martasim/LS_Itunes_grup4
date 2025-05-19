@@ -18,4 +18,14 @@ public interface iTunesApiService {
             @Query("entity") String entity,
             @Query("limit") int limit
     );
+
+
+    @GET("search")
+    Call<iTunesResponse> searchAlbums(
+            @Query("term") String term,
+            @Query("media") String media,
+            @Query("entity") String entity,
+            @Query("limit") int limit
+    );
+
 }
