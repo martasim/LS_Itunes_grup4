@@ -119,33 +119,6 @@ public class CercaFragment extends Fragment {
                     }
                 });
     }
-
-    private void loadAlbums() {
-        iTunesApiClient.getApiService().searchAlbumsSimple("drake", "music", "album", 15)
-                .enqueue(new Callback<iTunesResponse>() {
-                    @Override
-                    public void onResponse(Call<iTunesResponse> call, Response<iTunesResponse> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            // Filtrem només els resultats que realment tenen collectionName
-                            List<Album> albums = new ArrayList<>();
-                            for (Song s : response.body().getResults()) {
-                                Album album = new Album();
-                                album.setCollectionName(s.getCollectionName());
-                                album.setArtistName(s.getArtistName());
-                                album.setArtworkUrl100(s.getArtworkUrl100());
-                                albums.add(album);
-                            }
-                            albumAdapter.setAlbums(albums);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<iTunesResponse> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
-    }
-
     private void searchSongs(String term) {
         Log.d("API_JSON", "Term: " + term);
         iTunesApiClient.getApiService().searchSongs(term, "music", "musicTrack", 15)
@@ -169,21 +142,23 @@ public class CercaFragment extends Fragment {
                 });
     }
 
-    private void searchAlbums(String term) {
-
-        Log.d("API_JSON", "Term: " + term);
-        iTunesApiClient.getApiService().searchAlbumsSimple(term, "music", "album", 15)
+    private void loadAlbums() {
+        iTunesApiClient.getApiService().searchAlbums("drake", "music", "album", 15, 0)
                 .enqueue(new Callback<iTunesResponse>() {
                     @Override
                     public void onResponse(Call<iTunesResponse> call, Response<iTunesResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             List<Album> albums = new ArrayList<>();
                             for (Song s : response.body().getResults()) {
-                                Album album = new Album();
-                                album.setCollectionName(s.getCollectionName());
-                                album.setArtistName(s.getArtistName());
-                                album.setArtworkUrl100(s.getArtworkUrl100());
-                                albums.add(album);
+                                if (s.getCollectionName() != null && s.getArtistName() != null) {
+                                    Album album = new Album();
+                                    album.setCollectionName(s.getCollectionName());
+                                    album.setArtistName(s.getArtistName());
+                                    album.setArtworkUrl100(s.getArtworkUrl100());
+                                    album.setCollectionPrice(s.getCollectionPrice());
+                                    album.setCollectionId(s.getCollectionId());
+                                    albums.add(album);
+                                }
                             }
                             albumAdapter.setAlbums(albums);
                         }
@@ -191,11 +166,43 @@ public class CercaFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<iTunesResponse> call, Throwable t) {
-                        Log.e("API_ERROR", "Fallo al llamar API: " + t.getMessage());
                         t.printStackTrace();
                     }
                 });
     }
+
+    private void searchAlbums(String term) {
+        iTunesApiClient.getApiService().searchAlbums(term, "music", "album", 15, 0)
+                .enqueue(new Callback<iTunesResponse>() {
+                    @Override
+                    public void onResponse(Call<iTunesResponse> call, Response<iTunesResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            List<Album> albums = new ArrayList<>();
+                            for (Song s : response.body().getResults()) {
+                                if (s.getCollectionName() != null && s.getArtistName() != null) {
+                                    Album album = new Album();
+                                    album.setCollectionName(s.getCollectionName());
+                                    album.setArtistName(s.getArtistName());
+                                    album.setArtworkUrl100(s.getArtworkUrl100());
+                                    album.setCollectionPrice(s.getCollectionPrice());
+                                    album.setCollectionId(s.getCollectionId());
+                                    albums.add(album);
+                                }
+                            }
+                            albumAdapter.setAlbums(albums);
+                        } else {
+                            Log.e("CercaFragment", "Error: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<iTunesResponse> call, Throwable t) {
+                        Log.e("CercaFragment", "Failure: " + t.getMessage());
+                        t.printStackTrace();
+                    }
+                });
+    }
+
 
 
 }
