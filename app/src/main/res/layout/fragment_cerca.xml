@@ -59,6 +59,19 @@
             android:paddingBottom="4dp" />
 
         <TextView
+            android:id="@+id/btn_veure_tots_albums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Veure tots els àlbums"
+            android:textColor="#6200EE"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Àlbums destacats"

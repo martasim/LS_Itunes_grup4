@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.TotalCanconsActivity" />
+        <activity android:name=".ui.TotalAlbumsActivity" />
 
     </application>
 

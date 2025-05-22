@@ -8,6 +8,7 @@ public class Song {
     private String collectionName;
     private String releaseDate;
     private double trackPrice;
+    private double collectionPrice;
     private String primaryGenreName;
 
     public String getTrackName() {
@@ -40,5 +41,12 @@ public class Song {
 
     public String getPrimaryGenreName() {
         return primaryGenreName;
+    }
+    public Double getCollectionPrice() {
+        return collectionPrice;
+    }
+
+    public void setCollectionPrice(Double collectionPrice) {
+        this.collectionPrice = collectionPrice;
     }
 }

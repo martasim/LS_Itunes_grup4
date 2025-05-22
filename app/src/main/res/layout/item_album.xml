@@ -16,17 +16,17 @@
         android:padding="12dp">
 
         <ImageView
-            android:id="@+id/iv_artwork"
+            android:id="@+id/album_art"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="centerCrop"
             android:contentDescription="Portada àlbum" />
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/album_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Títol àlbum"
+            android:text="Nom àlbum"
             android:textStyle="bold"
             android:textSize="14sp"
             android:maxLines="1"
@@ -35,7 +35,7 @@
             android:textColor="#212121" />
 
         <TextView
-            android:id="@+id/tv_artist"
+            android:id="@+id/album_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Artista"
@@ -43,5 +43,17 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="#757575" />
+
+        <TextView
+            android:id="@+id/album_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="9,99 €"
+            android:textSize="13sp"
+            android:textColor="#6200EE"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            android:ellipsize="end" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

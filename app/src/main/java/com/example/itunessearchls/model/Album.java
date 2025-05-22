@@ -5,6 +5,16 @@ public class Album {
     private String collectionName;
     private String artistName;
     private String artworkUrl100;
+    private Double collectionPrice;
+
+    public Double getCollectionPrice() {
+        return collectionPrice;
+    }
+
+    public void setCollectionPrice(Double collectionPrice) {
+        this.collectionPrice = collectionPrice;
+    }
+
 
     public String getCollectionName() {
         return collectionName;

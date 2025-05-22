@@ -2,6 +2,7 @@ package com.example.itunessearchls.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.example.itunessearchls.model.Song;
 
 import com.example.itunessearchls.api.iTunesApiClient;
 import com.example.itunessearchls.model.iTunesResponse;
+import com.google.gson.Gson;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,12 +50,14 @@ public class CercaFragment extends Fragment {
         rvSongs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         songAdapter = new SongAdapter(new ArrayList<Song>());
         rvSongs.setAdapter(songAdapter);
+        songAdapter.notifyDataSetChanged();
 
 
         rvAlbums = view.findViewById(R.id.rv_albums);
         rvAlbums.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        albumAdapter = new AlbumAdapter(new ArrayList<Album>());
+        albumAdapter = new AlbumAdapter(new ArrayList<>(), false);
         rvAlbums.setAdapter(albumAdapter);
+        albumAdapter.notifyDataSetChanged();
 
         EditText etSearch = view.findViewById(R.id.et_search);
         TextView btnVeureTotes = view.findViewById(R.id.btn_veure_totes);
@@ -60,12 +65,12 @@ public class CercaFragment extends Fragment {
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, android.view.KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
-                    String term = etSearch.getText().toString().trim();
-                    if (!term.isEmpty()) {
-                        searchSongs(term);
-                        searchAlbums(term);
-                    }
+                String term = etSearch.getText().toString().trim();
+                Log.d("CercaFragment", "onEditorAction fired: " + actionId + " | term: " + term);
+
+                if (!term.isEmpty()) {
+                    searchSongs(term);
+                    searchAlbums(term);
                     return true;
                 }
                 return false;
@@ -73,11 +78,22 @@ public class CercaFragment extends Fragment {
         });
 
 
+
+
         btnVeureTotes.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), TotalCanconsActivity.class);
             intent.putExtra("search_term", etSearch.getText().toString());
             startActivity(intent);
         });
+
+        TextView btnVeureTotsAlbums = view.findViewById(R.id.btn_veure_tots_albums);
+
+        btnVeureTotsAlbums.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), TotalAlbumsActivity.class);
+            intent.putExtra("search_term", etSearch.getText().toString().trim());
+            startActivity(intent);
+        });
+
 
 
         loadSongs();
@@ -105,7 +121,7 @@ public class CercaFragment extends Fragment {
     }
 
     private void loadAlbums() {
-        iTunesApiClient.getApiService().searchAlbums("drake", "music", "album", 15)
+        iTunesApiClient.getApiService().searchAlbumsSimple("drake", "music", "album", 15)
                 .enqueue(new Callback<iTunesResponse>() {
                     @Override
                     public void onResponse(Call<iTunesResponse> call, Response<iTunesResponse> response) {
@@ -131,24 +147,32 @@ public class CercaFragment extends Fragment {
     }
 
     private void searchSongs(String term) {
+        Log.d("API_JSON", "Term: " + term);
         iTunesApiClient.getApiService().searchSongs(term, "music", "musicTrack", 15)
                 .enqueue(new Callback<iTunesResponse>() {
                     @Override
                     public void onResponse(Call<iTunesResponse> call, Response<iTunesResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            songAdapter.setSongs(response.body().getResults());
+                            List<Song> songs = response.body().getResults();
+                            Log.d("CercaFragment", "Songs received: " + songs.size());
+                            songAdapter.setSongs(songs);
+                        } else {
+                            Log.e("CercaFragment", "Error: " + response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<iTunesResponse> call, Throwable t) {
+                        Log.e("CercaFragment", "Failure: " + t.getMessage());
                         t.printStackTrace();
                     }
                 });
     }
 
     private void searchAlbums(String term) {
-        iTunesApiClient.getApiService().searchAlbums(term, "music", "album", 15)
+
+        Log.d("API_JSON", "Term: " + term);
+        iTunesApiClient.getApiService().searchAlbumsSimple(term, "music", "album", 15)
                 .enqueue(new Callback<iTunesResponse>() {
                     @Override
                     public void onResponse(Call<iTunesResponse> call, Response<iTunesResponse> response) {
@@ -167,6 +191,7 @@ public class CercaFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<iTunesResponse> call, Throwable t) {
+                        Log.e("API_ERROR", "Fallo al llamar API: " + t.getMessage());
                         t.printStackTrace();
                     }
                 });

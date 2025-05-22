@@ -8,62 +8,72 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.itunessearchls.R;
 import com.example.itunessearchls.model.Album;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
 
-    private List<Album> albumList;
+    private List<Album> albums;
+    private boolean isVerticalLayout; //  aquí marquem si volem la vista vertical
 
-    public AlbumAdapter(List<Album> albumList) {
-        this.albumList = albumList;
+    public AlbumAdapter(List<Album> albums, boolean isVerticalLayout) {
+        this.albums = albums;
+        this.isVerticalLayout = isVerticalLayout;
     }
 
     public void setAlbums(List<Album> albums) {
-        this.albumList = albums;
+        this.albums = albums;
         notifyDataSetChanged();
+    }
+
+    public void addAlbums(List<Album> newAlbums) {
+        int start = albums.size();
+        albums.addAll(newAlbums);
+        notifyItemRangeInserted(start, newAlbums.size());
     }
 
     @Override
     public AlbumViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_album, parent, false);
+        int layoutId = isVerticalLayout ? R.layout.item_album_vertical : R.layout.item_album;
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
         return new AlbumViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(AlbumViewHolder holder, int position) {
-        Album album = albumList.get(position);
+        Album album = albums.get(position);
+        holder.albumTitle.setText(album.getCollectionName());
+        holder.albumArtist.setText(album.getArtistName());
 
-        holder.tvTitle.setText(album.getCollectionName());
-        holder.tvArtist.setText(album.getArtistName());
+        if (album.getCollectionPrice() != null) {
+            holder.albumPrice.setText(album.getCollectionPrice() + " €");
+        } else {
+            holder.albumPrice.setText("—");
+        }
 
-        Picasso.get()
+        Glide.with(holder.itemView.getContext())
                 .load(album.getArtworkUrl100())
-                .into(holder.ivArtwork);
+                .into(holder.albumImage);
     }
 
     @Override
     public int getItemCount() {
-        if (albumList == null) {
-            return 0;
-        }
-        return albumList.size();
+        return albums.size();
     }
 
     public static class AlbumViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivArtwork;
-        TextView tvTitle, tvArtist;
+        ImageView albumImage;
+        TextView albumTitle, albumArtist, albumPrice;
 
         public AlbumViewHolder(View itemView) {
             super(itemView);
-
-            ivArtwork = itemView.findViewById(R.id.iv_artwork);
-            tvTitle = itemView.findViewById(R.id.tv_title);
-            tvArtist = itemView.findViewById(R.id.tv_artist);
+            albumImage = itemView.findViewById(R.id.album_art);
+            albumTitle = itemView.findViewById(R.id.album_title);
+            albumArtist = itemView.findViewById(R.id.album_artist);
+            albumPrice = itemView.findViewById(R.id.album_price);
         }
     }
 }
