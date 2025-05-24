@@ -1,6 +1,8 @@
 package com.example.itunessearchls.model;
 
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable {
     private String trackName;
     private String artistName;
     private String artworkUrl100;
@@ -11,6 +13,7 @@ public class Song {
     private double collectionPrice;
     private String primaryGenreName;
     private int collectionId;
+    private int trackId;
 
 
     public String getTrackName() {
@@ -40,6 +43,9 @@ public class Song {
     public double getTrackPrice() {
         return trackPrice;
     }
+    public void setTrackPrice(double trackPrice) {
+        this.trackPrice = trackPrice;
+    }
 
     public String getPrimaryGenreName() {
         return primaryGenreName;
@@ -56,5 +62,13 @@ public class Song {
     }
     public void setCollectionId(int collectionId) {
         this.collectionId = collectionId;
+    }
+
+    public int getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
     }
 }

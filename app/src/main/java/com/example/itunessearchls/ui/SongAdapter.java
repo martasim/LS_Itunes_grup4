@@ -1,5 +1,6 @@
 package com.example.itunessearchls.ui;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.itunessearchls.R;
 import com.example.itunessearchls.model.Song;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -27,25 +28,29 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         notifyDataSetChanged();
     }
 
-    @Override
     public SongViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_song, parent, false);
         return new SongViewHolder(itemView);
     }
 
-    @Override
     public void onBindViewHolder(SongViewHolder holder, int position) {
         Song song = songList.get(position);
+
         holder.tvTitle.setText(song.getTrackName());
         holder.tvArtist.setText(song.getArtistName());
 
-        Picasso.get()
+        Glide.with(holder.itemView.getContext())
                 .load(song.getArtworkUrl100())
                 .into(holder.ivArtwork);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), SongDetailActivity.class);
+            intent.putExtra("song", song);
+            v.getContext().startActivity(intent);
+        });
     }
 
-    @Override
     public int getItemCount() {
         return songList != null ? songList.size() : 0;
     }

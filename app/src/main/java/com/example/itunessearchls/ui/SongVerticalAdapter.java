@@ -1,5 +1,6 @@
 package com.example.itunessearchls.ui;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,13 @@ public class SongVerticalAdapter extends RecyclerView.Adapter<SongVerticalAdapte
         Picasso.get()
                 .load(song.getArtworkUrl100())
                 .into(holder.ivArtwork);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), SongDetailActivity.class);
+            intent.putExtra("song", song);
+            v.getContext().startActivity(intent);
+        });
+
     }
 
     @Override

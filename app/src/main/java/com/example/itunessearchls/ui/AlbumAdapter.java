@@ -65,6 +65,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             v.getContext().startActivity(intent);
         });
 
+
+
     }
 
     @Override
