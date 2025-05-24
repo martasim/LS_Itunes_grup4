@@ -1,5 +1,6 @@
 package com.example.itunessearchls.ui;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         Glide.with(holder.itemView.getContext())
                 .load(album.getArtworkUrl100())
                 .into(holder.albumImage);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), AlbumSongsActivity.class);
+            intent.putExtra("collection_id", albums.get(position).getCollectionId());
+            v.getContext().startActivity(intent);
+        });
+
     }
 
     @Override

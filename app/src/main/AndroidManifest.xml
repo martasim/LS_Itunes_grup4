@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".ui.TotalCanconsActivity" />
         <activity android:name=".ui.TotalAlbumsActivity" />
+        <activity android:name=".ui.AlbumSongsActivity" />
 
     </application>
 

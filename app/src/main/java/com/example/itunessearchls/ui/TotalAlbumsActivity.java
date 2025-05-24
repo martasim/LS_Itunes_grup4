@@ -68,6 +68,9 @@ public class TotalAlbumsActivity extends AppCompatActivity {
                                 album.setArtistName(s.getArtistName());
                                 album.setArtworkUrl100(s.getArtworkUrl100());
                                 album.setCollectionPrice(s.getCollectionPrice());
+
+                                album.setCollectionId(s.getCollectionId());
+
                                 albums.add(album);
                             }
                             albumAdapter.addAlbums(albums);

@@ -39,6 +39,13 @@ public interface iTunesApiService {
             @Query("offset") int offset
     );
 
+    @GET("lookup")
+    Call<iTunesResponse> lookupAlbum(
+            @Query("id") int id,
+            @Query("entity") String entity
+    );
+
+
 
 
 

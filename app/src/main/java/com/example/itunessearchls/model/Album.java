@@ -8,6 +8,7 @@ public class Album {
     private Double collectionPrice;
     private int collectionId;
 
+
     public Double getCollectionPrice() {
         return collectionPrice;
     }
