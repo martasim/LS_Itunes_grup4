@@ -18,7 +18,7 @@ import java.util.List;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
 
     private List<Album> albums;
-    private boolean isVerticalLayout; //  aquí marquem si volem la vista vertical
+    private boolean isVerticalLayout;
 
     public AlbumAdapter(List<Album> albums, boolean isVerticalLayout) {
         this.albums = albums;

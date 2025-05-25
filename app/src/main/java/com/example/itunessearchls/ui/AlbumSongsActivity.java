@@ -55,7 +55,7 @@ public class AlbumSongsActivity extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             List<Song> songs = response.body().getResults();
                             if (songs.size() > 1) {
-                                songs.remove(0); // El primer elemento es el álbum, no una canción
+                                songs.remove(0);
                                 songAdapter.setSongs(songs);
                             }
                         }

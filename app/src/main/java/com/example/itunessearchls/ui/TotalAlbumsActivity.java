@@ -24,7 +24,7 @@ public class TotalAlbumsActivity extends AppCompatActivity {
     private boolean isLoading = false;
     private int offset = 0;
     private final int PAGE_SIZE = 15;
-    private String searchTerm = "music"; // valor por defecto
+    private String searchTerm = "music";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

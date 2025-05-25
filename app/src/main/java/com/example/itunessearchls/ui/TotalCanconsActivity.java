@@ -43,7 +43,7 @@ public class TotalCanconsActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
-        // Recollim el terme de cerca
+
         if (getIntent() != null && getIntent().hasExtra("search_term")) {
             searchTerm = getIntent().getStringExtra("search_term");
         }
