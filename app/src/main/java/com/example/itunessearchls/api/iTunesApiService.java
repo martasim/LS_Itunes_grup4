@@ -45,6 +45,10 @@ public interface iTunesApiService {
             @Query("entity") String entity
     );
 
+    @GET("lookup")
+    Call<iTunesResponse> lookupMultipleSongs(@Query("id") String ids);
+
+
 
 
 

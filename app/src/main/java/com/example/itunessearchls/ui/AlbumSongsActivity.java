@@ -40,7 +40,8 @@ public class AlbumSongsActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv_album_songs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        songAdapter = new SongVerticalAdapter(new ArrayList<>());
+        songAdapter = new SongVerticalAdapter(new ArrayList<>(), false, null);
+
         recyclerView.setAdapter(songAdapter);
 
         fetchAlbumSongs(collectionId);

@@ -28,11 +28,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="12dp">
+            android:layout_marginStart="12dp"
+            android:layout_gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nom de la cançó"
                 android:textStyle="bold"
@@ -43,7 +44,7 @@
 
             <TextView
                 android:id="@+id/tv_artist"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Artista"
                 android:textSize="14sp"
@@ -51,5 +52,18 @@
                 android:maxLines="1"
                 android:ellipsize="end" />
         </LinearLayout>
+
+        <ToggleButton
+            android:id="@+id/btn_favorite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
+            android:button="@drawable/selector_favorite"
+            android:textOff=""
+            android:textOn=""
+            android:text="" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
