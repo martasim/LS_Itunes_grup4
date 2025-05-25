@@ -23,6 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.TotalCanconsActivity" />
+        <activity android:name=".ui.TotalAlbumsActivity" />
+        <activity android:name=".ui.AlbumSongsActivity" />
+        <activity android:name=".ui.SongDetailActivity" />
+
+
     </application>
 
 </manifest>
