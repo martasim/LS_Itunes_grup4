@@ -39,7 +39,8 @@ public class TotalCanconsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_total_songs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new SongVerticalAdapter(songList);
+        adapter = new SongVerticalAdapter(songList, false, null);
+
         recyclerView.setAdapter(adapter);
 
         // Recollim el terme de cerca

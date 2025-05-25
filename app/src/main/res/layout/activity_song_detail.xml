@@ -77,12 +77,13 @@
             android:id="@+id/btn_favorite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textOn="★ Afegit a favorits"
-            android:textOff="☆ Afegir a favorits"
-            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/fav_button"
             android:textColor="#6200EE"
-            android:backgroundTint="#EEEEEE"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:padding="12dp"
-            android:layout_marginTop="16dp" />
+            android:text="★ FAVORITS" />
+
     </LinearLayout>
 </ScrollView>
