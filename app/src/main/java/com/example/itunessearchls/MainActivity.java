@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.itunessearchls.ui.CercaFragment;
+import com.example.itunessearchls.ui.EsbrinaFragment;
+import com.example.itunessearchls.ui.FavoritsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,23 +20,31 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
+            int id = item.getItemId();
 
-            if (item.getItemId() == R.id.nav_cerca) {
-                selectedFragment = new CercaFragment();
+            if (id == R.id.nav_cerca) {
+                loadFragment(new CercaFragment());
+                return true;
+            } else if (id == R.id.nav_esbrina) {
+                loadFragment(new EsbrinaFragment());
+                return true;
+            } else if (id == R.id.nav_favorits) {
+                loadFragment(new FavoritsFragment());
+                return true;
             }
 
-            if (selectedFragment != null) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, selectedFragment)
-                        .commit();
-            }
-
-            return true;
+            return false;
         });
 
+        if (savedInstanceState == null) {
+            bottomNav.setSelectedItemId(R.id.nav_cerca);
+        }
+    }
 
-        bottomNav.setSelectedItemId(R.id.nav_cerca);
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 }
