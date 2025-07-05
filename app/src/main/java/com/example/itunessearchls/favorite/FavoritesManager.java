@@ -29,11 +29,12 @@ public class FavoritesManager {
 
     public static Set<String> getFavorites(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        return new HashSet<>(prefs.getStringSet(KEY, new HashSet<>()));
+        Set<String> stored = prefs.getStringSet(KEY, new HashSet<>());
+        return stored == null ? new HashSet<>() : new HashSet<>(stored);
     }
 
     private static void save(Context context, Set<String> favorites) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putStringSet(KEY, favorites).apply();
+        prefs.edit().putStringSet(KEY, favorites).commit();
     }
 }

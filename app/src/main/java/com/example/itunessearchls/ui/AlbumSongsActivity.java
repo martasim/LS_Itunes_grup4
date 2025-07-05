@@ -1,7 +1,9 @@
 package com.example.itunessearchls.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,8 @@ public class AlbumSongsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_songs);
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
 
         collectionId = getIntent().getIntExtra("collection_id", -1);
         if (collectionId == -1) {
@@ -47,6 +51,16 @@ public class AlbumSongsActivity extends AppCompatActivity {
         fetchAlbumSongs(collectionId);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (songAdapter != null) {
+            songAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+
     private void fetchAlbumSongs(int id) {
         iTunesApiClient.getApiService().lookupAlbum(id, "song")
                 .enqueue(new Callback<iTunesResponse>() {
@@ -61,10 +75,24 @@ public class AlbumSongsActivity extends AppCompatActivity {
                         }
                     }
 
+
                     @Override
                     public void onFailure(Call<iTunesResponse> call, Throwable t) {
                         Log.e("AlbumSongsActivity", "Error al cargar canciones: " + t.getMessage());
                     }
                 });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 101 && resultCode == RESULT_OK && data != null) {
+            songAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+
+
 }

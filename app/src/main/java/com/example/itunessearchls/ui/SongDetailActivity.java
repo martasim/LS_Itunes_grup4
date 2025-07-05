@@ -2,6 +2,9 @@ package com.example.itunessearchls.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -26,6 +29,14 @@ public class SongDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song_detail);
+
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         tvTitle = findViewById(R.id.tv_song_title);
         tvArtist = findViewById(R.id.tv_song_artist);
@@ -68,6 +79,7 @@ public class SongDetailActivity extends AppCompatActivity {
             updateFavoriteUI();
         });
     }
+
 
     private void updateFavoriteUI() {
         boolean isFav = FavoritesManager.isFavorite(this, song.getTrackId());

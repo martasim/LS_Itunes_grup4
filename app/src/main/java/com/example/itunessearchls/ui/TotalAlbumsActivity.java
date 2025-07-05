@@ -2,6 +2,8 @@ package com.example.itunessearchls.ui;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,8 @@ public class TotalAlbumsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_total_albums);
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
 
         searchTerm = getIntent().getStringExtra("search_term");
         if (searchTerm == null || searchTerm.trim().isEmpty()) {

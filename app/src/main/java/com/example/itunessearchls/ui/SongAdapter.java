@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.itunessearchls.R;
+import com.example.itunessearchls.favorite.FavoritesManager;
 import com.example.itunessearchls.model.Song;
 
 import java.util.List;
@@ -43,6 +44,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         Glide.with(holder.itemView.getContext())
                 .load(song.getArtworkUrl100())
                 .into(holder.ivArtwork);
+
+
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), SongDetailActivity.class);

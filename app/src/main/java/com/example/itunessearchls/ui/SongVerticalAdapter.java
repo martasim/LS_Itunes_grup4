@@ -41,7 +41,6 @@ public class SongVerticalAdapter extends RecyclerView.Adapter<SongVerticalAdapte
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_song_vertical, parent, false);
         return new SongViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(SongViewHolder holder, int position) {
         Song song = songList.get(position);
@@ -52,6 +51,8 @@ public class SongVerticalAdapter extends RecyclerView.Adapter<SongVerticalAdapte
 
         Picasso.get().load(song.getArtworkUrl100()).into(holder.ivArtwork);
 
+        holder.btnFavorite.setOnCheckedChangeListener(null);
+
         boolean isFav = FavoritesManager.isFavorite(context, song.getTrackId());
         holder.btnFavorite.setChecked(isFav);
 
@@ -60,31 +61,29 @@ public class SongVerticalAdapter extends RecyclerView.Adapter<SongVerticalAdapte
                 FavoritesManager.addFavorite(context, song.getTrackId());
             } else {
                 FavoritesManager.removeFavorite(context, song.getTrackId());
-
                 if (isFromFavorites) {
                     int pos = holder.getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION && pos < songList.size()) {
                         songList.remove(pos);
                         notifyItemRemoved(pos);
-                        if (onFavoritesChanged != null) onFavoritesChanged.run();
                     }
                 }
             }
-            holder.btnFavorite.setChecked(FavoritesManager.isFavorite(context, song.getTrackId()));
         });
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, SongDetailActivity.class);
             intent.putExtra("song", song);
 
-            if (isFromFavorites) {
-                ((Activity) context).startActivityForResult(intent, 1);
+            if (context instanceof Activity) {
+                ((Activity) context).startActivityForResult(intent, 101);
             } else {
                 context.startActivity(intent);
             }
         });
-
     }
+
+
 
     @Override
     public int getItemCount() {

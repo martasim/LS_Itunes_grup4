@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.itunessearchls.MainActivity;
 import com.example.itunessearchls.R;
 import com.example.itunessearchls.api.iTunesApiClient;
 import com.example.itunessearchls.favorite.FavoritesManager;
@@ -33,12 +35,12 @@ public class FavoritsFragment extends Fragment {
     private SongVerticalAdapter songAdapter;
     private TextView tvEmptyMessage;
 
+
     public FavoritsFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorits, container, false);
-
         recyclerView = view.findViewById(R.id.rv_favorites);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         tvEmptyMessage = view.findViewById(R.id.tv_no_favorites);
